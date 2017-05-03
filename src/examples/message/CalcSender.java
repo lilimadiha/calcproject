@@ -202,12 +202,18 @@ public class CalcSender extends Agent
         }
         
 	msg.setContent(strObj);
+        String operator = calObj.getOperation();
         
-     	msg.addReceiver(new AID("cap", AID.ISLOCALNAME));
-        msg.addReceiver(new AID("cam", AID.ISLOCALNAME));
-        msg.addReceiver(new AID("cad", AID.ISLOCALNAME));
-        msg.addReceiver(new AID("cas", AID.ISLOCALNAME));
-        msg.addReceiver(calcServiceAgentAID);
+        if (operator == "plus") {
+            msg.addReceiver(new AID("cap", AID.ISLOCALNAME));
+        } else if(operator == "minus") {
+            msg.addReceiver(new AID("cas", AID.ISLOCALNAME));
+        } else if(operator == "multiply") {
+            msg.addReceiver(new AID("cam", AID.ISLOCALNAME));
+        } else if(operator == "divide") {
+            msg.addReceiver(new AID("cad", AID.ISLOCALNAME));
+        } 
+
         send(msg);
         
         calcGui.appendLog("Sending Message to cap");
